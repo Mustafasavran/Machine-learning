@@ -5,7 +5,7 @@ Created on Thu May 24 22:17:59 2018
 
 @author: mustafa
 """
-#Linear regression with one variable and vectorization
+##Linear regression with one variable and vectorization
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt
