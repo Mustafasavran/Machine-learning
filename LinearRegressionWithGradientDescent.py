@@ -1,7 +1,7 @@
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt
-#Lineer Regression with one variable without vectorization
+#Linear Regression with one variable without vectorization
 
 
 
