@@ -35,7 +35,7 @@ class NeuralNetwork(object):
           
       return 1/(1+np.exp(-s))
    
-    def backward(self,x,y,o,regularize,lambd=0.1,learning_rate=0.01,size):
+    def backward(self,x,y,o,regularize,size,learning_rate,lambd):
         
         
         #calculate derivates
@@ -64,11 +64,11 @@ class NeuralNetwork(object):
         self.b2=self.b2-learning_rate*self.db2
         
         
-    def train(self,x,y,regularize=False,epoch=1000,size):
+    def train(self,x,y,regularize=False,epoch=1000,size,learning_rate=0.01,lambd=0.1):
         for i in range(epoch):
              o=self.forward(x)
              print ("epoch: ",i,"\n","Loss: " , NN.calculate_loss(y,o)) 
-             self.backward(x,y,o,regularize,size)
+             self.backward(x,y,o,regularize,size,learning_rate,lambd)
        
     
     def accuracy(self,y,o): #calculate accuracy
