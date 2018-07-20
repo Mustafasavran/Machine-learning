@@ -35,24 +35,24 @@ class NeuralNetwork(object):
           
       return 1/(1+np.exp(-s))
    
-    def backward(self,x,y,o,regularize,lambd=0.008,learning_rate=0.1325):
+    def backward(self,x,y,o,regularize,lambd=0.1,learning_rate=0.01,size):
         
         
         #calculate derivates
         self.dz2=np.multiply((y-o),self.sigmoid(self.z2,derivate=True))
         
-        self.dw2=(1/150*np.dot(self.a1.T,(self.dz2)))
+        self.dw2=(1/size*np.dot(self.a1.T,(self.dz2)))
         
-        self.db2=1/150*np.sum(self.dz2,axis=0,keepdims=True)
+        self.db2=1/size*np.sum(self.dz2,axis=0,keepdims=True)
         
-        self.dz1=1/150*np.multiply(self.dz2.dot(self.W2.T),self.sigmoid(self.z1,derivate=True))
+        self.dz1=1/size*np.multiply(self.dz2.dot(self.W2.T),self.sigmoid(self.z1,derivate=True))
         
-        self.dw1=1/150*np.dot(x.T,(self.dz1))
+        self.dw1=1/size*np.dot(x.T,(self.dz1))
         
-        self.db1=1/150*np.sum(self.dz1,axis=0,keepdims=True)
+        self.db1=1/size*np.sum(self.dz1,axis=0,keepdims=True)
         if regularize:   #if want to regularize
-            self.dw2+=lambd*self.W2
-            self.dw1+=+lambd*self.W1
+            self.dw2+=lambd/(2*size)*self.W2
+            self.dw1+=+lambd/(2*size)*self.W1
             
         #update weights and bias
         self.W1=self.W1-learning_rate*self.dw1
@@ -64,11 +64,11 @@ class NeuralNetwork(object):
         self.b2=self.b2-learning_rate*self.db2
         
         
-    def train(self,x,y,regularize=False,epoch=1000):
+    def train(self,x,y,regularize=False,epoch=1000,size):
         for i in range(epoch):
              o=self.forward(x)
              print ("epoch: ",i,"\n","Loss: " , NN.calculate_loss(y,o)) 
-             self.backward(x,y,o,regularize)
+             self.backward(x,y,o,regularize,size)
        
     
     def accuracy(self,y,o): #calculate accuracy
